@@ -3,10 +3,8 @@ import requests
 # do not save like this!!!
 app_id = "ваш client id"
 app_secret = "ваш client secret"
-url_redirect = "http://127.0.0.1:10000/authorization"
 
-
-def generate_link():
+def generate_link(url_redirect):
     params = dict(client_id=app_id,  # the client ID you received from GitHub when you registered
                   redirect_uri=url_redirect,  # the URL in your application where users will be sent after authorization
                   scope="user",  # type of access
@@ -16,7 +14,7 @@ def generate_link():
 
     return response.url
 
-def get_token_by_code(code):
+def get_token_by_code(code, url_redirect):
     params = dict(client_id=app_id,
                   client_secret=app_secret,
                   redirect_uri=url_redirect,
