@@ -1,0 +1,28 @@
+{% extends 'base.html' %}
+
+{% block content %}
+    {% from "_helpers.html" import render_field %}
+
+    <div class="content-section">
+
+        <form method="POST" action="" enctype="multipart/form-data">
+            {{ form.csrf_token() }}
+            <fieldset class="form-group">
+                {% with messages = get_flashed_messages() %}
+                    {% if messages %}
+                        {% for message in messages %}
+                            <span class="text-danger">{{ message }}</span>
+                        {% endfor %}
+                    {% endif %}
+                {% endwith %}
+
+                <legend class="heading">Изменение информации</legend>
+
+                {{ render_field(form.rating, class_="form-control-number") }}
+            </fieldset>
+            <div class="form-group">
+                {{ form.submit(class="btn btn-primary") }}
+            </div>
+        </form>
+    </div>
+{% endblock content %}

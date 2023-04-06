@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>test</title>
+    <style>
+        #text-area {
+            min-height: 200px;
+            min-width: 500px;
+            background-color: beige;
+
+            max-height: 200px;
+            max-width: 500px;
+
+            overflow: scroll;
+            word-break: break-all;
+        }
+        .msg {
+            background-color: gray;
+            min-width: 200px;
+            min-height: 50px;
+            margin: 10px;
+        }
+
+    </style>
+</head>
+
+<body>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/4.0.1/socket.io.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+
+
+<div id="text-area">
+
+</div>
+
+<input id="msg" placeholder="Введите текст">
+<button id="submit">Submit</button>
+
+<button id="room1">room 1</button>
+<button id="room2">room 2</button>
+
+<script>
+    $(document).ready(function () {
+        let socket = io();
+
+        let room = '1';
+
+        $('#room1').click(function () {
+            socket.emit('change_room', {'unsub_room': room, 'room': '1'})
+            room = '1';
+        })
+
+        $('#room2').click(function () {
+            socket.emit('change_room', {'unsub_room': room, 'room': '2'})
+            room = '2';
+        })
+
+        socket.on('connect', function () {
+            console.log('connected!');
+        });
+
+        socket.on('recv', function (data) {
+            $('#text-area').append(`<div class='msg'>${data.msg}</div>`)
+        });
+
+        $('#submit').click(function () {
+            const field = $('#msg');
+            let msg = field.val()
+            socket.emit('my_event', {'msg': msg, 'room': room})
+            field.val('')
+        })
+    });
+</script>
+</body>
+</html>
