@@ -1,0 +1,13 @@
+name: example CI/CD
+
+on:   # на какое действие триггериться
+  push:   # триггер на пуш
+    branches: [main, master]
+  workflow_dispatch:  # возможность ручного запуска
+
+jobs:   # какие работы выполнять, может быть несколько, можно с зависимостями
+  build_and_test:   # одна работа по сборке и тесту (название любое)
+    runs-on: ubuntu-latest  # на чём запускать
+    steps: # шаги действия
+      - run: pip install Flask pytest flask_sqlalchemy # или pip install -r requirements.txt 
+      - run: python p22/tests/test_crud.py
