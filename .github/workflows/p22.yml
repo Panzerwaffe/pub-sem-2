@@ -9,5 +9,6 @@ jobs:   # какие работы выполнять, может быть нес
   build_and_test:   # одна работа по сборке и тесту (название любое)
     runs-on: ubuntu-latest  # на чём запускать
     steps: # шаги действия
+      - run: pwd
       - run: pip install Flask pytest flask_sqlalchemy # или pip install -r requirements.txt 
       - run: python p22/tests/test_crud.py
