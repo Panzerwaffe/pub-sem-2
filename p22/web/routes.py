@@ -23,3 +23,13 @@ def add_some():
 
 	return "create page"
 
+@app.route('/edit/<int:pid>', methods=['POST'])
+def edit_some(pid):
+	if request.method == "POST":
+		obj = Some.query.filter_by(id=pid).one()
+		text = request.form.get("text", type=str)
+		obj.text = text
+		db.session.commit()
+
+		return redirect(url_for('index'))
+
