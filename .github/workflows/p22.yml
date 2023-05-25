@@ -13,5 +13,8 @@ jobs:   # какие работы выполнять, может быть нес
       - uses: actions/setup-python@v4
         with:
           python-version: '3.8' 
-      - run: pip install Flask pytest flask_sqlalchemy # или pip install -r requirements.txt 
-      - run: python p22/tests/test_crud.py
+      - name: installing
+        run: pip install Flask pytest flask_sqlalchemy # или pip install -r requirements.txt 
+      - name: testing
+        working-directory: ./p22  # указываем рабочую директорию. чтобы избежать ошибок с импортом
+        run: pytest # будет поиск файлов с именем test или указываем напрямую путь "tests/test_crud.py"
